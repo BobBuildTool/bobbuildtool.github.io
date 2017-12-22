@@ -1,0 +1,183 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<link rel="stylesheet" href="assets/blaze.min.css">
+		<link rel="stylesheet" href="assets/fa/css/fontawesome-all.min.css">
+		<link rel="stylesheet" href="assets/site.css">
+	</head>
+	<body>
+		<div class="c-site-header">
+			<div class="o-container o-container--large u-window-box--small c-site-header">
+				<img class="o-page-logo" src="logo.png" alt="Bob Logo">
+				<div class="c-site-header-links">
+					<a href="http://bob-build-tool.readthedocs.io/en/latest/index.html" class="c-color-inherit"><i class="fas fa-book fa-2x"></i></a>
+				</div>
+				<div class="c-site-header-links">
+					<a href="https://github.com/BobBuildTool/bob" class="c-color-inherit"><i class="fab fa-github fa-2x"></i></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="u-centered">
+			<div class="o-container o-container--small">
+				<div class="u-leter-box u-letter-box--large">
+					<h1 class="c-site-headline">Bob Build Tool</h1>
+					<p class="u-large">
+						Bob is a functional build automation tool with an
+						emphasisis on cross compilation. It is intended for
+						complex embedded projects and thus focuses on
+						reproducible builds while still being nice to
+						developers in agile environments.
+					</p>
+				</div>
+			</div>
+			<div class="c-section-highlighted"><div class="o-container o-container--xlarge"><div class="o-grid o-grid--wrap o-grid--small-full o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-100">
+					<h2 class="c-heading u-super">What makes Bob different?</h2>
+					<p class="c-paragraph">
+						In contrast to similar tools Bob tries to bridge the
+						gap between a classic package build system that
+						reliably builds hundreds of packages and a working
+						environment where individual developers can work on
+						their applications. Bob strives to be fast, reliable
+						and reproducible while still being the core of a
+						continuous integration work flow.
+					</p>
+				</div>
+			<!-- 1st row -->
+				<div class="o-grid__cell o-grid__cell--width-33 u-letter-box--super">
+					<i class="fas fa-file-alt fa-5x"></i>
+					<h3 class="c-heading u-xlarge">One description to rule'em all</h3>
+					<p class="c-paragraph">
+						Bob recipes describe everything how the software is
+						built. Build, edit, re-build and test your packages
+						exactly the same way as the CI server would build them.
+						If it builds locally then it will build on the CI
+						server too and vice versa.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33 u-window-box--super">
+					<i class="fab fa-jenkins fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Jenkins CI integration</h3>
+					<p class="c-paragraph">
+						Bob will configure a Jenkins server right from the
+						recipes. No need to to deal separately with the CI
+						setup. Spend less time debugging your Jenkins jobs
+						because everything is already described in the recipes.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33 u-window-box--super">
+					<i class="fas fa-history fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Enable reproducible builds</h3>
+					<p class="c-paragraph">
+						Bob's functional approach makes all input to a package
+						explicitly visible. Bob can virtualise the build
+						environment with a sandbox. In the sandbox all paths
+						are host independent, only declared input is accessible
+						read-only and just the workspace is writeable. No
+						possibility for the configure script to see a stray
+						library that was not declared.
+					</p>
+				</div>
+			<!-- 2nd row -->
+				<div class="o-grid__cell o-grid__cell--width-33 u-window-box--super">
+					<i class="fas fa-code-branch fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Variant management</h3>
+					<p class="c-paragraph">
+						Recipes declare their input and the required steps to
+						build the package.  Depending on the configured
+						environment Bob automatically computes how many
+						variants of a package must be built. E.g. building the
+						same recipe with different compilers in the same
+						project is as easy as checking out different source
+						code for a package for different platforms.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33 u-window-box--super">
+					<i class="fas fa-database fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Binary Artifacts</h3>
+					<p class="c-paragraph">
+						Why build a package locally if the CI server or someone
+						else has built it already? Bob can use a binary
+						artifact cache to fetch compatible artifacts. Despite
+						a shared location no special setup is needed. Use your
+						CPU to compile packages you're working on, not the
+						prerequisites that everybody else has built already.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33 u-window-box--super">
+					<i class="far fa-clipboard fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Audit trail</h3>
+					<p class="c-paragraph">
+						Every artifact has an audit trail attached to it
+						describing all input and processing steps that have led
+						to it. The audit trail shows what has been built where
+						and when with what recipes. This works across local and
+						Jenkins builds.
+					</p>
+				</div>
+			</div></div></div>
+
+			<div class="o-container o-container--xlarge"><div class="o-grid o-grid--wrap o-grid--small-full o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-100">
+					<h2 class="c-heading u-super">What are the primary use cases for Bob?</h2>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-50 u-letter-box--super">
+					<i class="fab fa-linux fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Embedded Linux systems</h3>
+					<p class="c-paragraph">
+						Just like Bitbake and Buildroot you can use Bob to
+						build a custom embedded Linux image. Bob makes it very
+						easy to add your own applications in this environment
+						and immediately test them in the final image. Build
+						upon stable packages and develop your applications in a
+						true CI setup to accelerate development. See the
+						basement project for a starting point.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-50 u-letter-box--super">
+					<i class="fas fa-microchip fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Complex embedded devices</h3>
+					<p class="c-paragraph">
+						Bob supports building firmware images for devices that
+						contain cores with different architectures. For example
+						a device could have an Application core, as DSP and a
+						microcontroller. Bob supports this setup, especially if
+						some code is shared between the different cores.
+					</p>
+				</div>
+			</div></div>
+
+			<div class="c-section-inverted"><div class="o-container o-container--xlarge"><div class="o-grid o-grid--wrap o-grid--small-full o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-100">
+					<h2 class="c-heading u-super">Open Source</h2>
+					<p class="c-paragraph">Bob is open source, free and always will be. Pull Requests, suggestions or comments are all welcome and valued.</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33 u-letter-box--super">
+					<i class="fa fa-github-alt fa-5x" style="color: #fd6623;"></i>
+					<h3 class="c-heading u-xlarge">Hosted on Github</h3>
+					<p class="c-paragraph">
+						Our project (and this website) is hosted on Github.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33 u-letter-box--super">
+					<i class="fas fa-play fa-5x" style="color: #fd6623;"></i>
+					<h3 class="c-heading u-xlarge">Reference recipes</h3>
+					<p class="c-paragraph">
+						The basement project serves as a reference project for
+						Bob. Use it as a blueprint for your project or build a
+						custom Linux device with it.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33 u-letter-box--super">
+					<i class="fas fa-users fa-5x" style="color: #fd6623;"></i>
+					<h3 class="c-heading u-xlarge">Community</h3>
+					<p class="c-paragraph">
+						Everybody is welcome to contribute on Github. If you have a specific question you're welcome to post on the mailing list.
+					</p>
+				</div>
+			</div></div></div>
+		</div>
+	</body>
+</html>

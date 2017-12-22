@@ -1,0 +1,38 @@
+body {
+	font-family: "Lato","proxima-nova","Helvetica Neue",Arial,sans-serif;
+    font-weight: normal;
+    color: #404040;
+	background-color: rgb(252, 252, 252);
+}
+
+.c-color-inherit {
+	color: inherit;
+}
+
+.c-site-header {
+	background-color: rgb(255, 255, 255);
+	border-bottom-width: 1px;
+    border-bottom-style: solid;
+    border-bottom-color: rgb(238, 238, 238);
+}
+
+.c-site-header-links {
+	float: right;
+	padding-left: .5rem;
+    padding-right: .5rem;
+}
+
+.c-site-headline {
+	font-size: 6em;
+    font-weight: 700;
+}
+
+.c-section-highlighted {
+	background-color: #fd6623;
+    color: #fff;
+}
+
+.c-section-inverted {
+	background-color: #111;
+    color: #fff;
+}
