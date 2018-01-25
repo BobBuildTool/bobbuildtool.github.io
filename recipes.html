@@ -1,0 +1,171 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<link rel="stylesheet" href="assets/blaze.min.css">
+		<link rel="stylesheet" href="assets/fa/css/fontawesome-all.min.css">
+		<link rel="stylesheet" href="assets/site.css">
+	</head>
+	<body>
+		<div class="c-site-header">
+			<div class="o-container o-container--large u-window-box--small c-site-header">
+				<img class="o-page-logo" src="logo.png" alt="Bob Logo">
+				<div class="c-site-header-links">
+					<a href="http://bob-build-tool.readthedocs.io/en/latest/index.html" class="c-color-inherit"><i class="fas fa-book fa-2x"></i></a>
+				</div>
+				<div class="c-site-header-links">
+					<a href="https://github.com/BobBuildTool/bob" class="c-color-inherit"><i class="fab fa-github fa-2x"></i></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="u-centered">
+			<div class="o-container o-container--small">
+				<div class="u-leter-box u-letter-box--large">
+					<h1>Bob recipes</h1>
+					<p class="u-large">
+						Bob recipes are Yaml files that collectively describe the whole structure of a project,
+						including their tools. Each recipe describes how a package is built and what the input, such as
+						source code or other packages, is.  A typical recipe looks like this:
+					</p>
+				</div>
+			</div>
+
+			<div class="o-container o-container--medium u-letter-box--large"><div class="u-leter-box u-letter-box--medium">
+				<code class="c-code c-code--multiline u-left u-higher">inherit: [autotools]
+
+metaEnvironment:
+    PKG_VERSION: "4.1.3"
+	PKG_LICENSE: "GPL-3.0-or-later"
+
+depends:
+    - libs::mpfr-dev
+    - use: []
+      depends:
+        - libs::mpfr-tgt
+
+checkoutSCM:
+    scm: url
+    url: ${GNU_MIRROR}/gawk/gawk-${PKG_VERSION}.tar.xz
+    digestSHA1: "76b0acbbdeaa0e58466675c5faf68895eedd8306"
+    stripComponents: 1
+
+buildVars: [GAWK_DISABLE_EXTENSIONS]
+buildScript: |
+    autotoolsBuild $1 \
+		${GAWK_DISABLE_EXTENSIONS:+--disable-extensions}
+
+packageScript: |
+    autotoolsPackageTgt
+
+provideDeps: [ "*-tgt" ]</code>
+			</div></div>
+			<div class="c-section-highlighted"><div class="o-container o-container--large"><div class="o-grid o-grid--wrap o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-100">
+					<h2 class="c-heading u-super">A couple of keywords are enough</h2>
+					<p class="c-paragraph">
+						The recipes describe packages in a functional manner. They define the input (source code, other
+						packages, environment variables and tools), how the package is built and what the final output
+						is. In contrast to the usual "sysroot"-approach of other build systems Bob will keep packages
+						separate from each other in the file system. Given this functional approach Bob can track
+						changes very effectively and minimize undetected cross-package dependencies.
+					</p>
+				</div>
+
+				<div class="o-grid__cell o-grid__cell--width-33">
+					<h2 class="c-heading u-xlarge c-text--mono">inherit</h2>
+					<p class="c-paragraph">
+						Inherit common definitions and functionality from classes. They are used to factor out repeatedly
+						used functions, like supporting standard build systems. Classes can inherit each other.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33">
+					<h2 class="c-heading u-xlarge c-text--mono">metaEnvironment</h2>
+					<p class="c-paragraph">
+						Define variables that describe the package. These variables can be used in the recipe in other
+						sections.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33">
+					<h2 class="c-heading u-xlarge c-text--mono">depends</h2>
+					<p class="c-paragraph">
+						Only declared dependencies are accessible when the package is built. Each dependency is kept in
+						a separete workspace to not mix results so that changes can be tracked accurately. 
+					</p>
+				</div>
+
+				<div class="o-grid__cell o-grid__cell--width-33">
+					<h2 class="c-heading u-xlarge c-text--mono">checkoutSCM</h2>
+					<p class="c-paragraph">
+						Defines one or more sources of the package. Bob has built-in support for fetching URLs (e.g.
+						http), git, svn and cvs. An additional <tt>checkoutScript</tt> can be used for advanced stuff like
+						applying patches.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33">
+					<h2 class="c-heading u-xlarge c-text--mono">buildVars</h2>
+					<p class="c-paragraph">
+						Bob tightly controls the environment variables that are set during the script execution. Only
+						declared variables will be available at built time. Using this knowledge Bob can track which
+						variables have an impact on what packages.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33">
+					<h2 class="c-heading u-xlarge c-text--mono">buildScript</h2>
+					<p class="c-paragraph">
+						A bash script that builds the package. In this case a shell function defined by the autotools
+						class is used that does all the heavy lifting. All scripts are run with <tt>errexit</tt>,
+						<tt>nounset</tt> and <tt>pipefail</tt> to detect errors early.
+					</p>
+				</div>
+
+				<div class="o-grid__cell o-grid__cell--width-30 o-grid__cell--offset-20">
+					<h2 class="c-heading u-xlarge c-text--mono">packageScript</h2>
+					<p class="c-paragraph">
+						This bash script extracts the final result from the build workspace. In this case the recipe
+						uses the standard function from the autotools class. The files left in the workspace by this
+						script are the result of the package.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-30">
+					<h2 class="c-heading u-xlarge c-text--mono">provideDeps</h2>
+					<p class="c-paragraph">
+						Forward dependencies upwards towards the dependent packages so that they do not need to care
+						about transitive dependencies. 
+					</p>
+				</div>
+			</div></div></div>
+
+			<div class="o-container o-container--large"><div class="o-grid o-grid--wrap o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-100">
+					<h2 class="c-heading u-super">Special kinds of recipes</h2>
+					<p class="c-paragraph">
+						Despite the regular recipes as shown above there are special kinds that describe the build
+						environment. They complete the holistic approach of Bob to control all aspects of the sofware
+						build. Except the usage of some additional keywords they are like any other recipe.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-50 u-letter-box--large">
+					<h2 class="c-heading u-xlarge">Tool recipes</h2>
+					<p class="c-paragraph">
+						Tool recipes bring in build tools that are used during package compilation. Tools have a name
+						and are declared by the <tt>provideTools</tt> keyword. Typically this is the C(++)-compiler but
+						it could be any tool that is required, e.g. flex, bison, protoc, you name it.  They can be
+						downloaded or even built with the project.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-50 u-letter-box--large">
+					<h2 class="c-heading u-xlarge">Sandbox recipes</h2>
+					<p class="c-paragraph">
+						A sandbox is used to almost fully virtualize the host build environment. It is declared by a
+						<tt>provideSandbox</tt> keyword. Think of it as a file system image which is used by Bob to
+						create a fresh temporary container for each package that is built. Bob uses
+						<a href="http://man7.org/linux/man-pages/man7/user_namespaces.7.html">user namespaces</a> so
+						that no root priviliges are needed.
+					</p>
+				</div>
+			</div></div>
+
+		</div>
+	</body>
+</html>

@@ -1,0 +1,122 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<link rel="stylesheet" href="assets/blaze.min.css">
+		<link rel="stylesheet" href="assets/fa/css/fontawesome-all.min.css">
+		<link rel="stylesheet" href="assets/site.css">
+	</head>
+	<body>
+		<div class="c-site-header">
+			<div class="o-container o-container--large u-window-box--small c-site-header">
+				<img class="o-page-logo" src="logo.png" alt="Bob Logo">
+				<div class="c-site-header-links">
+					<a href="http://bob-build-tool.readthedocs.io/en/latest/index.html" class="c-color-inherit"><i class="fas fa-book fa-2x"></i></a>
+				</div>
+				<div class="c-site-header-links">
+					<a href="https://github.com/BobBuildTool/bob" class="c-color-inherit"><i class="fab fa-github fa-2x"></i></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="u-centered">
+			<div class="o-container o-container--small">
+				<div class="u-leter-box u-letter-box--large">
+					<h1>Jenkins CI integration</h1>
+					<p class="u-large">
+						Bob can use a Jenkins server to continuously build a project. Bob creates, updates and deletes
+						the jobs as needed and as the recipes evolve during time. Just tell Bob where your server is
+						located and let him configure it. By giving each project a unique prefix multiple projects can
+						be built on the same server.
+					</p>
+				</div>
+			</div>
+
+			<div class="c-section-highlighted"><div class="o-container o-container--large"><div class="o-grid o-grid--wrap o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-100">
+					<h2 class="c-heading u-super">Configuring a server</h2>
+					<p class="c-paragraph">
+						Getting a Jenkins to build your project is just two commands in Bob.  Suppose you have a
+						suitable Jenkins server located at http://jenkins.intranet.local:8080 and want to build the
+						<a href="https://github.com/BobBuildTool/bob-tutorials/tree/master/sandbox">sandbox
+						tutorial</a>.  Go to the project root directory and tell Bob about your server and what you want
+						to build there (substitute $USER and $PASSWD with your actual credentials):
+					</p>
+					<div class="u-leter-box u-letter-box--large">
+						<code class="c-code c-code--multiline u-left">$ bob jenkins add intranet http://$USER:$PASSWD@jenkins.intranet.local:8080 \
+	-p sandbox- -r vexpress</code>
+					</div>
+					<p class="c-paragraph">
+						This adds a synonym (“intranet”) for your Jenkins server. The -p adds the sandbox- prefix to
+						every job. At least one -r option must be given to specify what should be built. To create the
+						jobs and start the build do a:
+					</p>
+					<div class="u-leter-box u-letter-box--large">
+						<code class="c-code c-code--multiline u-left">$ bob jenkins push intranet</code>
+					</div>
+					<p class="c-paragraph">
+						Now go to your Jenkins and see it build...
+					</p>
+				</div>
+			</div></div></div>
+
+			<div class="o-container o-container--large"><div class="o-grid o-grid--wrap o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-100">
+					<h2 class="c-heading u-super">Notable features of Jenkins integration</h2>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-20 o-grid__cell--center u-letter-box--large">
+					<h2 class="c-heading u-xlarge">Per-Recipe jobs</h2>
+					<p class="c-paragraph">
+						Bob will create a separate job for each recipe. This keeps the project structure visible and
+						allows proper pipelining. Building on remote slaves is fully supported.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-80 u-letter-box--large">
+					<img class="o-image u-higher" src="jenkins-jobs.png" />
+				</div>
+
+				<div class="o-grid__cell o-grid__cell--width-20 o-grid__cell--center u-letter-box--large">
+					<h2 class="c-heading u-xlarge">Continous builds</h2>
+					<p class="c-paragraph">
+						Recipes can reference SCM branches instead of tags or fixed tarballs. Bob will use the
+						respective Jenkins plugins to fetch the sources. This enables SCM hooks to work properly and the
+						Jenkins can build immediately whenever code is pushed.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-80 u-letter-box--large">
+					<img class="o-image u-higher" src="jenkins-git.png" />
+				</div>
+			</div></div>
+
+			<div class="c-section-inverted"><div class="o-container o-container--large"><div class="o-grid o-grid--wrap o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-33 u-letter-box--super">
+					<i class="fas fa-server fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Minimal requirements</h3>
+					<p class="c-paragraph">
+						Bob requires only a couple of Jenkins plugins and makes not much assumptions about the build
+						environment on the server.  If your project uses a sandbox (which is highly recommended) you do
+						not need to care much what is installed on the Jenins nodes.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33 u-letter-box--super">
+					<i class="fas fa-puzzle-piece fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Extensible</h3>
+					<p class="c-paragraph">
+						Bob has a plugin API which can be used to augement the Jenkins jobs as needed. Typical examples
+						would be to enable the Cobertura plugin for unit tests or to include the warnings plugin for
+						nice statistics.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-33 u-letter-box--super">
+					<i class="fas fa-forward fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Automatic configuration</h3>
+					<p class="c-paragraph">
+						Bob will update and trigger the Jenkins jobs as the recipes evolve. By executing Bob itself in a
+						Jenkins job you can let the server configure itself. Given that SCM hooks are configured correct
+						any commit to the recipes or the soure code will trigger the affected jobs.
+					</p>
+				</div>
+			</div></div></div>
+		</div>
+	</body>
+</html>

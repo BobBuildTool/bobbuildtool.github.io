@@ -9,6 +9,11 @@ body {
 	color: inherit;
 }
 
+.c-no-decoration {
+	color: inherit;
+	text-decoration: none;
+}
+
 .c-site-header {
 	background-color: rgb(255, 255, 255);
 	border-bottom-width: 1px;

@@ -33,7 +33,7 @@
 				</div>
 			</div>
 			<script src="https://asciinema.org/a/158040.js" id="asciicast-158040" async></script>
-			<div class="c-section-highlighted"><div class="o-container o-container--xlarge"><div class="o-grid o-grid--wrap o-grid--small-full o-grid--medium-full">
+			<div class="c-section-highlighted"><div class="o-container o-container--xlarge"><div class="o-grid o-grid--wrap o-grid--medium-full">
 				<div class="o-grid__cell o-grid__cell--width-100">
 					<h2 class="c-heading u-super">What makes Bob different?</h2>
 					<p class="c-paragraph">
@@ -48,8 +48,10 @@
 				</div>
 			<!-- 1st row -->
 				<div class="o-grid__cell o-grid__cell--width-33 u-letter-box--super">
-					<i class="fas fa-file-alt fa-5x"></i>
-					<h3 class="c-heading u-xlarge">One description to rule'em all</h3>
+					<a href="recipes.html" class="c-color-inherit">
+						<i class="fas fa-file-alt fa-5x"></i>
+						<h3 class="c-heading u-xlarge">One description to rule'em all</h3>
+					</a>
 					<p class="c-paragraph">
 						Bob recipes describe everything how the software is
 						built. Build, edit, re-build and test your packages
@@ -59,8 +61,10 @@
 					</p>
 				</div>
 				<div class="o-grid__cell o-grid__cell--width-33 u-window-box--super">
-					<i class="fab fa-jenkins fa-5x"></i>
-					<h3 class="c-heading u-xlarge">Jenkins CI integration</h3>
+					<a href="jenkins.html" class="c-color-inherit">
+						<i class="fab fa-jenkins fa-5x"></i>
+						<h3 class="c-heading u-xlarge">Jenkins CI integration</h3>
+					</a>
 					<p class="c-paragraph">
 						Bob will configure a Jenkins server right from the
 						recipes. No need to to deal separately with the CI
@@ -69,16 +73,15 @@
 					</p>
 				</div>
 				<div class="o-grid__cell o-grid__cell--width-33 u-window-box--super">
-					<i class="fas fa-history fa-5x"></i>
-					<h3 class="c-heading u-xlarge">Enable reproducible builds</h3>
+					<i class="fas fa-database fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Binary Artifacts</h3>
 					<p class="c-paragraph">
-						Bob's functional approach makes all input to a package
-						explicitly visible. Bob can virtualise the build
-						environment with a sandbox. In the sandbox all paths
-						are host independent, only declared input is accessible
-						read-only and just the workspace is writeable. No
-						possibility for the configure script to see a stray
-						library that was not declared.
+						Why build a package locally if the CI server or someone
+						else has built it already? Bob can use a binary
+						artifact cache to fetch compatible artifacts. Despite
+						a shared location no special setup is needed. Use your
+						CPU to compile packages you're working on, not the
+						prerequisites that everybody else has built already.
 					</p>
 				</div>
 			<!-- 2nd row -->
@@ -96,15 +99,16 @@
 					</p>
 				</div>
 				<div class="o-grid__cell o-grid__cell--width-33 u-window-box--super">
-					<i class="fas fa-database fa-5x"></i>
-					<h3 class="c-heading u-xlarge">Binary Artifacts</h3>
+					<i class="fas fa-history fa-5x"></i>
+					<h3 class="c-heading u-xlarge">Enable reproducible builds</h3>
 					<p class="c-paragraph">
-						Why build a package locally if the CI server or someone
-						else has built it already? Bob can use a binary
-						artifact cache to fetch compatible artifacts. Despite
-						a shared location no special setup is needed. Use your
-						CPU to compile packages you're working on, not the
-						prerequisites that everybody else has built already.
+						Bob's functional approach makes all input to a package
+						explicitly visible. Bob can virtualise the build
+						environment with a sandbox. In the sandbox all paths
+						are host independent, only declared input is accessible
+						read-only and just the workspace is writeable. No
+						possibility for the configure script to see a stray
+						library that was not declared.
 					</p>
 				</div>
 				<div class="o-grid__cell o-grid__cell--width-33 u-window-box--super">
@@ -120,7 +124,7 @@
 				</div>
 			</div></div></div>
 
-			<div class="o-container o-container--xlarge"><div class="o-grid o-grid--wrap o-grid--small-full o-grid--medium-full">
+			<div class="o-container o-container--xlarge"><div class="o-grid o-grid--wrap o-grid--medium-full">
 				<div class="o-grid__cell o-grid__cell--width-100">
 					<h2 class="c-heading u-super">What are the primary use cases for Bob?</h2>
 				</div>
@@ -150,7 +154,7 @@
 				</div>
 			</div></div>
 
-			<div class="c-section-inverted"><div class="o-container o-container--xlarge"><div class="o-grid o-grid--wrap o-grid--small-full o-grid--medium-full">
+			<div class="c-section-inverted"><div class="o-container o-container--xlarge"><div class="o-grid o-grid--wrap o-grid--medium-full">
 				<div class="o-grid__cell o-grid__cell--width-100">
 					<h2 class="c-heading u-super">Open Source</h2>
 					<p class="c-paragraph">Bob is open source, free and always will be. Pull Requests, suggestions or comments are all welcome and valued.</p>
