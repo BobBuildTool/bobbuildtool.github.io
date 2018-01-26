@@ -1,0 +1,159 @@
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, minimum-scale=1, initial-scale=1, user-scalable=yes">
+		<link rel="stylesheet" href="assets/blaze.min.css">
+		<link rel="stylesheet" href="assets/fa/css/fontawesome-all.min.css">
+		<link rel="stylesheet" href="assets/site.css">
+	</head>
+	<body>
+		<div class="c-site-header">
+			<div class="o-container o-container--large u-window-box--small c-site-header">
+				<img class="o-page-logo" src="logo.png" alt="Bob Logo">
+				<div class="c-site-header-links">
+					<a href="http://bob-build-tool.readthedocs.io/en/latest/index.html" class="c-color-inherit"><i class="fas fa-book fa-2x"></i></a>
+				</div>
+				<div class="c-site-header-links">
+					<a href="https://github.com/BobBuildTool/bob" class="c-color-inherit"><i class="fab fa-github fa-2x"></i></a>
+				</div>
+			</div>
+		</div>
+
+		<div class="u-centered">
+			<div class="o-container o-container--small">
+				<div class="u-leter-box u-letter-box--large">
+					<h1>Binary artifacts</h1>
+					<p class="u-large">
+						Bob supports sharing binary artifacts with alomost no additional configuration. Most importantly
+						Bob uses implicit versioning to free the user from explicit version management that is usually
+						required by other package building systems. Sharing artifacts requires nothing more than a
+						shared location.
+					</p>
+				</div>
+			</div>
+
+			<div class="o-container o-container--medium u-letter-box--large"><div class="o-grid o-grid--wrap">
+				<div class="o-grid__cell o-grid__cell--center o-grid__cell--width-33">
+					<i class="fas fa-terminal fa-4x"></i>
+					<p>Local builds</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--center o-grid__cell--width-33">
+				</div>
+				<div class="o-grid__cell o-grid__cell--center o-grid__cell--width-33">
+					<i class="far fa-file-archive fa-4x"></i>	
+					<p>Local file system</p>
+				</div>
+
+				<div class="o-grid__cell o-grid__cell--center o-grid__cell--width-33">
+				</div>
+				<div class="o-grid__cell o-grid__cell--center o-grid__cell--width-33">
+					<i class="fas fa-exchange-alt fa-5x"></i>
+				</div>
+				<div class="o-grid__cell o-grid__cell--center o-grid__cell--width-33">
+					<i class="fas fa-cloud fa-4x"></i>
+					<p>HTTP(S)</p>
+				</div>
+
+				<div class="o-grid__cell o-grid__cell--center o-grid__cell--width-33">
+					<i class="fab fa-jenkins fa-4x"></i>
+					<p>Jenkins builds</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--center o-grid__cell--width-33">
+				</div>
+				<div class="o-grid__cell o-grid__cell--center o-grid__cell--width-33">
+					<i class="fas fa-cog fa-4x"></i>
+					<p>Custom adapters</p>
+				</div>
+			</div></div>
+			<div class="c-section-highlighted"><div class="o-container o-container--large"><div class="o-grid o-grid--wrap o-grid--small-full o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-100">
+					<h2 class="c-heading u-super">How does it work?</h2>
+					<p class="c-paragraph">
+						Bob creates a fingerprint from the sources and the involved recipes to locate a matching
+						artifact. This schema fully supports local changes of the source code, changed recipes and
+						building from frequently pushed branches. In case of git Bob does not even need to download the
+						source code at all to compute this fingerprint. Instead the current branch head is queried
+						with <tt>git ls-remote</tt> which is a light-weight operation.
+					</p>
+					<p class="c-paragraph">
+						A typical configuration for a shared WebDAV server can look like this. First you need a nginx
+						server or any other WebDAV capable web server. For nginx the following site configuration is
+						sufficent:
+					</p>
+					<div class="u-leter-box u-letter-box--large">
+						<code class="c-code c-code--multiline u-left">server {
+        listen 80;
+        server_name bob.archive.test;
+
+        client_max_body_size 0;
+
+        location / {
+                root ...;
+
+                dav_methods PUT DELETE MKCOL COPY MOVE;
+                dav_ext_methods PROPFIND OPTIONS;
+                dav_access group:rw all:r;
+                autoindex              on;
+                create_full_put_path   on;
+                allow all;
+        }
+}</code>
+					</div>
+					<p class="c-paragraph">
+						On the Bob project side only the following lines have to be added to default.yaml:
+					</p>
+					<div class="u-leter-box u-letter-box--large">
+						<code class="c-code c-code--multiline u-left">archive:
+    -
+        backend: http
+        url: http://bob.archive.test/</code>
+					</div>
+					<p class="c-paragraph">
+						That's all what is needed to reliably share artifacts. The functional approach of Bob will
+						assure that a downloaded artifact is always built correctly. 
+					</p>
+				</div>
+			</div></div></div>
+
+			<div class="o-container o-container--large"><div class="o-grid o-grid--wrap o-grid--small-full o-grid--medium-full">
+				<div class="o-grid__cell o-grid__cell--width-100">
+					<h2 class="c-heading u-super">Supported back-ends</h2>
+					<p class="c-paragraph">
+						The directory layout of all back-ends are compatible with each other. It is therefore possible
+						to access the same location through different back-ends. This comes in handy if you want to
+						restrict who can upload artifacts but still want to allow public downloads.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-25 u-letter-box--super">
+					<i class="far fa-file-archive fa-4x"></i>
+					<h3 class="c-heading u-xlarge">Local file system</h3>
+					<p class="c-paragraph">
+						Store artifacts in the local file system.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-25 u-letter-box--super">
+					<i class="fas fa-cloud fa-4x"></i>
+					<h3 class="c-heading u-xlarge">WebDAV/HTTP(S) server</h3>
+					<p class="c-paragraph">
+						A http server that supports the standard GET and (if upload is desirec) also PUT requests.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-25 u-letter-box--super">
+					<i class="fab fa-microsoft fa-4x"></i>
+					<h3 class="c-heading u-xlarge">Azure Blob Storage</h3>
+					<p class="c-paragraph">
+						Use Microsoft Azure Blob storage for public access.
+					</p>
+				</div>
+				<div class="o-grid__cell o-grid__cell--width-25 u-letter-box--super">
+					<i class="fas fa-cog fa-4x"></i>
+					<h3 class="c-heading u-xlarge">Custom adapter</h3>
+					<p class="c-paragraph">
+						The up- and download can be done by any command too.
+					</p>
+				</div>
+			</div></div>
+
+		</div>
+	</body>
+</html>
